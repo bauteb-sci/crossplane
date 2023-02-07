@@ -12,9 +12,9 @@ spec:
     - key: Environment
       value: Production
     - key: Owner
-      value: Pavan
+      value: noone
     - key: Name
       value: xplane-argo-vpc
     instanceTenancy: default
   providerConfigRef:
-    name: aws-provider #awsconfig
+    name: awsconfig
