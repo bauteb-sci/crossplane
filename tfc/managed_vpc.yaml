@@ -12,7 +12,7 @@ spec:
     - key: Environment
       value: Production
     - key: Owner
-      value: noone
+      value: crossplane
     - key: Name
       value: xplane-argo-vpc
     instanceTenancy: default

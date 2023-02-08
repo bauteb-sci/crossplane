@@ -1,0 +1,45 @@
+apiVersion: ec2.aws.crossplane.io/v1beta1
+kind: Subnet
+metadata:
+  name: xplane-argo-subnet-1
+spec:
+  forProvider:
+    region: us-east-1
+    availabilityZone: us-east-1a
+    cidrBlock: 192.168.1.0/24
+    vpcIdRef:
+      name: xplane-argo-vpc
+    tags:
+    - key: Environment
+      value: Production
+    - key: Name
+      value: xplane-argo-subnet-1
+    - key: Owner
+      value: crossplane
+    mapPublicIPOnLaunch: true
+  providerConfigRef:
+    name: awsconfig
+
+---
+
+apiVersion: ec2.aws.crossplane.io/v1beta1
+kind: Subnet
+metadata:
+  name: xplane-argo-subnet-2
+spec:
+  forProvider:
+    region: us-east-1
+    availabilityZone: us-east-1b
+    cidrBlock: 192.168.2.0/24
+    vpcIdRef:
+      name: xplane-argo-vpc
+    tags:
+    - key: Environment
+      value: Production
+    - key: Name
+      value: xplane-argo-subnet-2
+    - key: Owner
+      value: crossplane
+    mapPublicIPOnLaunch: true
+  providerConfigRef:
+    name: awsconfig
