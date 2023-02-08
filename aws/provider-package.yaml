@@ -1,0 +1,9 @@
+# https://doc.crds.dev/github.com/crossplane/provider-aws
+# kubectl apply -f aws-provider.yaml
+# kubectl get provider.pkg
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: aws-crossplane
+spec:
+  package: crossplane/provider-aws:0.36.1
