@@ -1,0 +1,16 @@
+apiVersion: filesystem.flexops.io/v1alpha1
+kind: amazonEfs
+metadata:
+  name: crossplane-efs
+  namespace: crossplane-system
+spec:
+  compositionSelector:
+    matchLabels:
+      flexops.io/provider: aws
+      service: efs
+  resourceConfig:
+    providerConfigName: awsconfig
+    region: us-east-1
+  parameters:
+    AZName: us-east-1c
+    encrypted: true

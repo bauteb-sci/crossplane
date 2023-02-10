@@ -1,0 +1,68 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: xefs.filesystem.flexops.io
+  labels:
+    flexops.io/provider: aws
+    crossplane.io/xrd: efs.filesystem.flexops.io
+    service: efs
+spec:
+  writeConnectionSecretsToNamespace: crossplane-system
+  compositeTypeRef:
+    apiVersion: efs.aws.crossplane.io/v1alpha1
+    kind: XAmazonEfs
+  
+  patchSets:
+    - name: common-parameters
+      patches:
+        - type: FromCompositeFieldPath
+          fromFieldPath: spec.resourceConfig.providerConfigName
+          toFieldPath: spec.providerConfigRef.name
+        - type: FromCompositeFieldPath
+          fromFieldPath: spec.resourceConfig.deletionPolicy
+          toFieldPath: spec.deletionPolicy
+        - type: FromCompositeFieldPath
+          fromFieldPath: spec.resourceConfig.region
+          toFieldPath: spec.forProvider.region
+  
+  resources:
+    - name: efs
+      base:
+        apiVersion: efs.aws.crossplane.io/v1alpha1
+        kind: FileSystem
+        spec:
+          forProvider:
+            availabilityZoneName:
+            backup:
+            encrypted:
+            kmsKeyID:
+            performanceMode:
+            provisionedThroughputInMibps:
+            throughputMode:
+            tags:
+              - key: Name
+      patches:
+        - type: PatchSet
+          patchSetName: common-parameters
+        - type: FromCompositeFieldPath
+          fromFieldPath: spec.parameters.AZName
+          toFieldPath: spec.forProvider.availabilityZoneName
+        - type: FromCompositeFieldPath
+          fromFieldPath: spec.parameters.backup
+          toFieldPath: spec.forProvider.backup
+        - type: FromCompositeFieldPath
+          fromFieldPath: spec.parameters.encrypted
+          toFieldPath: spec.forProvider.encrypted
+        - type: FromCompositeFieldPath
+          fromFieldPath: spec.parameters.kmsKeyID
+          toFieldPath: spec.forProvider.kmsKeyID
+        - type: FromCompositeFieldPath
+          fromFieldPath: spec.parameters.performanceMode
+          toFieldPath: spec.forProvider.performanceMode
+        - type: FromCompositeFieldPath
+          fromFieldPath: spec.parameters.provisionedMibps
+          toFieldPath: spec.forProvider.provisionedThroughputInMibps
+        - type: FromCompositeFieldPath
+          fromFieldPath: spec.parameters.throughputMode
+          toFieldPath: spec.forProvider.throughputMode
+        
